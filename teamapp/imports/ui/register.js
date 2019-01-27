@@ -1,26 +1,65 @@
 import { Template } from "meteor/templating";
 import './register.html';
 
+Template.register.onRendered(function() {
+    $('.register').validate({
+        rules: {
+            username: {
+                required: true,
+                minlength: 3
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            password: {
+                required: true,
+                minlength: 5
+            },
+            password2: {
+                required: true,
+                equalTo: password
+            }
+        },
+        messages: {
+            username: {
+                required: "You must enter a username",
+                minlength: "Username must be at least {0} characters"
+            },
+            email: {
+                required: "You must enter an email",
+                email: "You must enter a valid email"
+
+            },
+            password: {
+                required: "You must enter a password",
+                minlength: "Password must be at least {0} characters"
+
+            },
+            password2: {
+                required: "You must reenter you password",
+                equalTo: "Passwords must be the same"
+
+            }
+        }
+    });
+});
+
 Template.register.events({
     'submit form'(event) {
         event.preventDefault();
-        var username = event.target.username.value;
-        var email = event.target.email.value;
-        var password = event.target.password.value;
-        var password2 = event.target.password2.value;
-        var terms = event.target.terms.value;
+        var username = $('[name=username]').val();
+        var email = $('[name=email]').val();
+        var password = $('[name=password]').val();
+        var password2 = $('[name=password2]').val();
+        var terms = $('[name=terms]').val();
         //confirm password
         //confirm terms checked
 
-
-        Meteor.loginWithPassword(username, password, function(error) {
-            if (Meteor.user()) {
-                console.log(Meteor.userID());
-            }
-            else{
-                console.log("Error: " + error.reason);
-            }
-            
+        Accounts.createUser({
+            email: email,
+            password: password,
+            username: username
         });
     }
 });

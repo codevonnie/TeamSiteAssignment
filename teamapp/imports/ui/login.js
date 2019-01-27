@@ -1,5 +1,23 @@
 import { Template } from "meteor/templating";
 import './login.html';
+import './register.js';
+import '../../routes.js';
+
+Template.login.onRendered(function() {
+    $('.login').validate({
+        rules: {
+            username: {
+                required: true,
+                minlength: 3
+            },
+            password: {
+                required: true,
+                minlength: true
+            }
+        }
+        
+    });
+});
 
 Template.login.events({
     'submit form'(event) {
