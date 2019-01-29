@@ -1,4 +1,5 @@
 import { Template } from "meteor/templating";
+import {Meteor} from 'meteor/meteor';
 import './login.html';
 import './register.js';
 import '../../routes.js';
@@ -18,6 +19,26 @@ Template.login.onRendered(function() {
         
     });
 });
+
+Template.login.events({
+    "click #sign-in-google": function(e, tmpl){
+        Meteor.loginWithGoogle({
+            requestPermissions: ['email']
+          }, function(error) {
+            if (error) {
+              console.log(error); //If there is any error, will get error here
+            }else{
+              console.log(Meteor.user());// If there is successful login, you will get login details here
+            }
+        });
+    }
+});
+
+// Template.login.helpers({
+//     isLoginServicesConfigured() {
+//         return Accounts.isLoginServicesConfigured();
+//     }
+// });
 
 Template.login.events({
     'submit form'(event) {

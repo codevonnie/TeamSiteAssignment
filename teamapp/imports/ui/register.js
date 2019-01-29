@@ -1,4 +1,5 @@
 import { Template } from "meteor/templating";
+import {Meteor} from 'meteor/meteor';
 import './register.html';
 
 Template.register.onRendered(function() {
@@ -61,5 +62,7 @@ Template.register.events({
             password: password,
             username: username
         });
+
+        console.log(Meteor.user());
     }
 });

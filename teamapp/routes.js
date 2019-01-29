@@ -7,3 +7,8 @@ Router.route('/register', {
     name: 'register',
     template: 'register'
 });
+
+// Router.route('/detail',{
+//     name: 'detail',
+//     template: 'detail'
+// });
